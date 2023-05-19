@@ -1,0 +1,7 @@
+.container {
+    margin: 3rem auto 3rem;
+    max-width: 36rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
