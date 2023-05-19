@@ -1,9 +1,11 @@
 import Image from "next/image"
 import Link from "next/link"
-import RootLayout from "./layout"
+import Head from "next/head"
+import { Metadata } from "next"
 export default function Page() {
     return (
         <>
+            
             <h1 >Hello World</h1>
             <Image
                 src="/a hipster drinking coffee.jpg"
@@ -17,3 +19,6 @@ export default function Page() {
         </>
     )
 }
+export const metadata: Metadata = {
+    title: 'home page'
+  };
