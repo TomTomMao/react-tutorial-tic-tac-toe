@@ -1,7 +1,15 @@
-.containerFlexColCenter {
+.containerFlexColCenter,.containerFlexColCenterM0,.containerFlexColCenterM3 {
     margin: 3rem auto 3rem;
     max-width: 36rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.containerFlexColCenterM3 {
+    margin: 3rem auto 3rem;
+}
+
+.containerFlexColCenterM0 {
+    margin: 0rem auto 0rem;
 }
