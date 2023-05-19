@@ -19,3 +19,8 @@
     flex-direction: row wrap;
     align-items: center;
 }
+.game {
+    display: flex;
+    flex-direction: row wrap;
+    align-items: center;
+}

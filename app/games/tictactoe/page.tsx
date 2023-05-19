@@ -9,25 +9,26 @@ function Square({ value, onSquareClick }: { value: string | null, onSquareClick:
         </button>
     )
 }
-function Board() {
-    const [squares , setSquares] = useState(Array(9).fill(null));
-    const [xIsNext, setXIsNext] = useState(true)
+function Board({ squares, xIsNext, onPlay }) {
+
     const winner = calculateWinner(squares);
-    let status : string;
+    let status: string;
     if (winner) {
         status = `winner: ${winner}`
     } else {
-        status = (xIsNext ? `next player: X` : `next player: O`)  
+        status = (xIsNext ? `next player: X` : `next player: O`)
     }
     function handleClick(i: number) {
         if (calculateWinner(squares)) {
             return;
         }
-        console.log(`button ${i} clicked`)
+        console.log(`button ${i} clicked, squares${i} = ${squares[i]}`)
+        if (squares[i] != null) {
+            return
+        }
         const newSquares = squares.slice()
-        xIsNext ? newSquares[i] = "X" : newSquares[i] = "O"
-        setXIsNext(!xIsNext);
-        setSquares(newSquares);
+        xIsNext ? newSquares[i] = "X" : newSquares[i] = "O";
+        onPlay(newSquares);
     }
     return (
         <div className={styles.board}>
@@ -50,27 +51,53 @@ function Board() {
         </div>)
 }
 export default function Game() {
+    const [history, setHistory] = useState([Array(9).fill(null)]);
+    const [currentMove, setCurrentMove] = useState(0);
+    const currentSquares = history[currentMove];
+    const xIsNext = currentMove % 2 === 0;
+    const moves: React.ReactNode = history.map((square, move) => {
+        const discription = (move === 0 ? "go back to the initial game" : `go back to the ${move} step`)
+        return (
+            <li>
+                <button key={move} onClick={() => goBackTo(move)}>{discription} </button>
+            </li>
+        )
+    })
+    function handlePlay(nextSquares) {
+        const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+        setHistory(nextHistory);
+        const nextMove = currentMove + 1;
+        setCurrentMove(nextMove);
+    }
+    function goBackTo(newMove) {
+        setCurrentMove(newMove);
+    }
     return (
-        <>
-            <h1>tictactoe</h1>
-            <Board></Board>
-        </>
+        <div className={styles.game}>
+            <div className="col">
+                <h1>tictactoe</h1>
+                <Board squares={currentSquares} xIsNext={xIsNext} onPlay={handlePlay}></Board>
+            </div>
+            <div className="col">
+                <ul>{moves}</ul>
+            </div>
+        </div>
     )
 }
 function calculateWinner(squares) {
     const lines = [
-        [0,1,2],
-        [3,4,5],
-        [6,7,8],
-        [0,3,6],
-        [1,4,7],
-        [2,5,8],
-        [0,4,8],
-        [2,4,6]
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
     ]
-    for (let [a,b,c] of lines) {
-        if (squares[a] && squares[a]==squares[b] && squares[b]==squares[c]) {
-            console.log([a,b,c])
+    for (let [a, b, c] of lines) {
+        if (squares[a] && squares[a] == squares[b] && squares[b] == squares[c]) {
+            console.log([a, b, c])
             return squares[a]
         }
     }
