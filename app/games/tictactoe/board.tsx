@@ -3,15 +3,20 @@ import Square from './square'
 
 export default function Board({ squares, xIsNext, onPlay }) {
 
-    const winner = calculateWinner(squares);
+    const {winner, squaresWin} = calculateWinner(squares);
     let status: string;
     if (winner) {
         status = `winner: ${winner}`
     } else {
-        status = (xIsNext ? `next player: X` : `next player: O`)
+        if (squares.filter((square) => square === "X" || square === "O").length === 9) {
+            status = "draw"
+        } else {
+            status = (xIsNext ? `next player: X` : `next player: O`)
+        }
     }
     function handleClick(i: number) {
-        if (calculateWinner(squares)) {
+        const {winner} = calculateWinner(squares);
+        if (winner) {
             return;
         }
         console.log(`button ${i} clicked, squares${i} = ${squares[i]}`)
@@ -27,7 +32,7 @@ export default function Board({ squares, xIsNext, onPlay }) {
         const squaresInRow = [];
         for (let j = 0; j <= 2; j++) {
             const squareId = i * 3 + j;
-            squaresInRow.push(<Square key={squareId} value={squares[squareId]} onSquareClick={() => handleClick(squareId)} />)
+                squaresInRow.push(<Square key={squareId} value={squares[squareId]} squareWin={squaresWin.includes(squareId)} onSquareClick={() => handleClick(squareId)} />)
         }
         rows.push((
             <div className={styles.boardRow}>
@@ -35,7 +40,6 @@ export default function Board({ squares, xIsNext, onPlay }) {
             </div>)
         )
     }
-    console.log(rows)
     return (
         <div className={styles.board}>
             <h2>{status}</h2>
@@ -71,8 +75,8 @@ function calculateWinner(squares) {
     for (let [a, b, c] of lines) {
         if (squares[a] && squares[a] == squares[b] && squares[b] == squares[c]) {
             console.log([a, b, c])
-            return squares[a]
+            return {winner: squares[a], squaresWin: [a, b, c]}
         }
     }
-    return null;
+    return {winner: null, squaresWin:[]};
 }

@@ -1,8 +1,8 @@
 import styles from './page.module.css';
 
-export default function Square({ value, onSquareClick }: { value: string | null, onSquareClick: () => void }) {
+export default function Square({ value, squareWin, onSquareClick }: { value: string | null, squareWin:boolean, onSquareClick: () => void }) {
     return (
-        <button className={styles.square} onClick={onSquareClick}>
+        <button className={squareWin ? styles.squareWin : styles.square} onClick={onSquareClick}>
             {value}
         </button>
     )
