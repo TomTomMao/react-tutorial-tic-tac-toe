@@ -28,3 +28,10 @@
     flex-direction: row wrap;
     align-items: center;
 }
+
+.moveHistoryLi, .moveHistoryLiCurrent {
+    font-size: 17px;
+}
+.moveHistoryLiCurrent {
+    color: blue;
+}

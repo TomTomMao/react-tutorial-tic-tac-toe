@@ -2,6 +2,7 @@
 import styles from './page.module.css';
 import { useState } from 'react';
 import Board from './board'
+import MoveHistoryList from './moveHistoryList';
 
 export default function Game() {
     const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -43,6 +44,7 @@ export default function Game() {
                         <button onClick={() => setButtonsAscending(!buttonsAscending)}>{buttonsAscending ? "current order: ascending" : "current order: descending"}</button>
                     </ul>
                 </div>
+                <MoveHistoryList history={history} currentMove={currentMove} ascending={buttonsAscending}/>
             </div>
         </>
     )
