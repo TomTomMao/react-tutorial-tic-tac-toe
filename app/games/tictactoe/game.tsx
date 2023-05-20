@@ -8,11 +8,17 @@ export default function Game() {
     const [currentMove, setCurrentMove] = useState(0);
     const currentSquares = history[currentMove];
     const xIsNext = currentMove % 2 === 0;
-    const moves: React.ReactNode = history.map((square, move) => {
-        const discription = (move === 0 ? "go back to the initial game" : `go back to the ${move} step`)
+    const [buttonsAscending, setButtonsAscending] = useState(true);
+    const moves: React.ReactNode[] = history.map((square, move) => {
+        let description: string;
+        if (move === currentMove) {
+            description = `You are at move #${move}`;
+        } else {
+            description = (move === 0 ? "go back to the initial game" : `Go to move #${move}`)
+        }
         return (
-            <li>
-                <button key={move} onClick={() => goBackTo(move)}>{discription} </button>
+            <li key={move}>
+                <button onClick={() => goBackTo(move)}>{description} </button>
             </li>
         )
     })
@@ -26,14 +32,16 @@ export default function Game() {
         setCurrentMove(newMove);
     }
     return (
-        <>  
+        <>
             <div className={styles.game}>
                 <div className="col">
                     <h1>tictactoe</h1>
                     <Board squares={currentSquares} xIsNext={xIsNext} onPlay={handlePlay}></Board>
                 </div>
                 <div className="col">
-                    <ul>{moves}</ul>
+                    <ul>{buttonsAscending ? moves : moves.reverse()}
+                        <button onClick={() => setButtonsAscending(!buttonsAscending)}>{buttonsAscending ? "current order: ascending" : "current order: descending"}</button>
+                    </ul>
                 </div>
             </div>
         </>

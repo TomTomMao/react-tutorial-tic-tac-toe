@@ -22,10 +22,25 @@ export default function Board({ squares, xIsNext, onPlay }) {
         xIsNext ? newSquares[i] = "X" : newSquares[i] = "O";
         onPlay(newSquares);
     }
+    const rows: React.ReactNode[] = []
+    for (let i = 0; i <= 2; i++) {
+        const squaresInRow = [];
+        for (let j = 0; j <= 2; j++) {
+            const squareId = i * 3 + j;
+            squaresInRow.push(<Square key={squareId} value={squares[squareId]} onSquareClick={() => handleClick(squareId)} />)
+        }
+        rows.push((
+            <div className={styles.boardRow}>
+                {squaresInRow}
+            </div>)
+        )
+    }
+    console.log(rows)
     return (
         <div className={styles.board}>
             <h2>{status}</h2>
-            <div className={styles.boardRow}>
+            {rows}
+            {/* <div className={styles.boardRow}>
                 <Square key={0} value={squares[0]} onSquareClick={() => handleClick(0)} />
                 <Square key={1} value={squares[1]} onSquareClick={() => handleClick(1)} />
                 <Square key={2} value={squares[2]} onSquareClick={() => handleClick(2)} />
@@ -39,7 +54,7 @@ export default function Board({ squares, xIsNext, onPlay }) {
                 <Square key={6} value={squares[6]} onSquareClick={() => handleClick(6)} />
                 <Square key={7} value={squares[7]} onSquareClick={() => handleClick(7)} />
                 <Square key={8} value={squares[8]} onSquareClick={() => handleClick(8)} />
-            </div>
+            </div> */}
         </div>)
 }
 function calculateWinner(squares) {
