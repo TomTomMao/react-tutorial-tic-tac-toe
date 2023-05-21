@@ -16,6 +16,8 @@ export default function Page() {
             <br />
             <Link
                 href="/games/tictactoe">play Tictactoe</Link>
+            <Link
+                href="/products">products</Link>
         </>
     )
 }
