@@ -1,0 +1,4 @@
+.task {
+    display: flexbox;
+    flex-direction: row;
+}

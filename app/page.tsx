@@ -28,6 +28,8 @@ export default async function Page() {
                 href="/games/tictactoe">play Tictactoe</Link>
             <Link
                 href="/products">products</Link>
+            <Link
+                href="/reactapp/todolist">to-do-list</Link>
         </>
     )
 }
