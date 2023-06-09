@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import utilStyles from "../../styles/utils.module.css"
 
-export default function Layout({ children, title }: { children: React.ReactNode, title:string }) {
+export default function Layout({ children }: { children: React.ReactNode}) {
     return <div className={utilStyles.containerFlexColCenter}>
         {children}
         <h2>

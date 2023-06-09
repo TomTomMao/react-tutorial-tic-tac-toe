@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import styles from './page.module.css'
 import Square from './square'
 
@@ -29,7 +30,7 @@ export default function Board({ squares, xIsNext, onPlay }) {
     }
     const rows: React.ReactNode[] = []
     for (let i = 0; i <= 2; i++) {
-        const squaresInRow = [];
+        const squaresInRow:Array<React.ReactNode> = [];
         for (let j = 0; j <= 2; j++) {
             const squareId = i * 3 + j;
                 squaresInRow.push(<Square key={squareId} value={squares[squareId]} squareWin={squaresWin.includes(squareId)} onSquareClick={() => handleClick(squareId)} />)

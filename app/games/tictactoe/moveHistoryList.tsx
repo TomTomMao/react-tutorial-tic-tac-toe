@@ -29,14 +29,12 @@ function calculateMovement(history: Array<Array<string | null>>) {
     for (let i = 1; i < history.length; i++) {
         const oldBoard: Array<string | null> = history[i - 1];
         const newBoard: Array<string | null> = history[i];
-        let changedSquareIndex: number;
         for (let j = 0; j < oldBoard.length; j++) {
             if (oldBoard[j] !== newBoard[j]) {
-                changedSquareIndex = j;
+                movementList.push({ move: i, changedSquareIndex: j })
                 break;
             }
         }
-        movementList.push({ move: i, changedSquareIndex: changedSquareIndex })
     }
     return movementList
 }
